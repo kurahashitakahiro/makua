@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  give_id: 1
+  item_image_id: MyString
+  is_deleted: false
+
+two:
+  give_id: 1
+  item_image_id: MyString
+  is_deleted: false

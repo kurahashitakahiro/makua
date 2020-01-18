@@ -1,0 +1,2 @@
+module Admins::GiveCommentsHelper
+end

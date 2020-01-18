@@ -1,0 +1,2 @@
+module Admins::GivesHelper
+end

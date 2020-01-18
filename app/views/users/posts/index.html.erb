@@ -1,0 +1,79 @@
+<section class="container clearfix">
+  <% if admin_signed_in? %>
+    <p>管理者としてログインしています。</p>
+    <%= link_to 'admin.logout', destroy_admin_session_path, method: :delete %>
+  <% elsif user_signed_in? %>
+    <p>ユーザとしてログインしています。</p>
+    <%= link_to 'user.logout', destroy_user_session_path, method: :delete %>
+    <%= form_for(@post, url: users_posts_path, method: :post) do |f| %>
+      <div>
+        <p>Post</p>
+        <p>Title</p>
+        <%= f.text_field :title %>
+      </div>
+      <div>
+        <p>Opinion</p>
+        <%= f.text_area :body %>
+      </div>
+      <div>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.submit 'create' %>
+      </div>
+    <% end %>
+    <table  class="table table-hover table-inverse">
+      <thead>
+        <tr>
+          <th>user</th>
+          <th>Title</th>
+          <th>Opinion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @posts.each do |post| %>
+        <tr>
+          <td><span><%= post.user.email %></span></td>
+          <td><span><%= post.title %></span></td>
+          <td><span><%= post.body %></span></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= form_for(@give, url: users_gives_path, method: :give) do |f| %>
+      <div>
+        <p>Give</p>
+        <p>Title</p>
+        <%= f.text_field :title %>
+      </div>
+      <div>
+        <p>Opinion</p>
+        <%= f.text_area :body %>
+      </div>
+      <div>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.submit 'create' %>
+      </div>
+    <% end %>
+    <table  class="table table-hover table-inverse">
+      <thead>
+        <tr>
+          <th>user</th>
+          <th>Title</th>
+          <th>Opinion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @gives.each do |give| %>
+        <tr>
+          <td><span><%= give.user.email %></span></td>
+          <td><span><%= give.title %></span></td>
+          <td><span><%= give.body %></span></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>ログインして下さい。</p>
+    <p>↓admin.loginはURLを直接入力して下さい。↓<br>/auth/panda_and_coffee_with_ryoko_play_login</p>
+    <%= link_to 'user.login', new_user_session_path %>
+  <% end %>
+</section>

@@ -1,0 +1,2 @@
+module Users::GiveCommentsHelper
+end

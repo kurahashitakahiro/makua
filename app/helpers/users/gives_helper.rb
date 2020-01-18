@@ -1,0 +1,2 @@
+module Users::GivesHelper
+end

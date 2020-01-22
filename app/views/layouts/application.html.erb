@@ -10,6 +10,55 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header class="headertop", style="padding: 0 50px; margin-bottom: 0px;">
+    <div class="nav navbar-nav navbar-left">
+      <h1><%= link_to 'makua', root_path, style: "color:white;" %></h1>
+    </div>
+      <div class="nav navbar-nav navbar-right" style="padding-left: 70%;  line-height: 50px;">
+        <% if admin_signed_in? %>
+          <%= link_to 'admin.logout', destroy_admin_session_path, method: :delete, style: "color:white;" %>
+        <% elsif user_signed_in? %>
+          <div class="row">
+            <div style="margin-right: 10px">
+              <%= link_to 'gives', users_gives_path, style: "color:white;" %>
+            </div>
+            <div style="margin-right: 10px">
+              <%= link_to 'posts', users_posts_path, style: "color:white;" %>
+            </div>
+            <div style="margin-right: 10px">
+              <%= link_to 'my page', users_user_path(current_user.id), style: "color:white;" %>
+            </div>
+            <div>
+              <%= link_to 'log out', destroy_user_session_path, method: :delete, style: "color:white;" %>
+            </div>
+        <% else %>
+          <div class="row">
+            <div style="margin-right: 10px">
+              <%= link_to 'about', users_homes_about_path, style: "color:white;" %>
+            </div>
+            <div style="margin-right: 10px">
+              <%= link_to 'gives', users_gives_path, style: "color:white;" %>
+            </div>
+            <div style="margin-right: 10px">
+              <%= link_to 'posts', users_posts_path, style: "color:white;" %>
+            </div>
+            <div style="margin-right: 10px">
+              <%= link_to 'log in', new_user_session_path, style: "color:white;" %>
+            </div>
+            <div>
+              <%= link_to 'sign up', new_user_registration_path, style: "color:white;" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </header>
+    <main>
+      <%= yield %>
+    </main>
+    <footer class="footer navbar-inverse", style="height: 50px; line-height: 50px;">
+      <div class="container">
+        <p class="nav navbar-nav navbar-right", style="color:white">© All rights reserved by makua.Inc.</p>
+      </div>
+    </footer>
   </body>
 </html>

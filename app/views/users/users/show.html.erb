@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6 offset-5">
+	  <h2>my page</h2>
+	  <p class="trim-image-to-circle">
+	    <%= attachment_image_tag @user, :user_image_id, :fill, 100, 100, format: 'jpeg', size: '120x120', class: "pull-left profile-img rounded-circle", fallback: "no_image.jpg" %>
+	  </p>
+	  <p>name: <%= @user.name %></p>
+	</div>
+  </div>
+</div>

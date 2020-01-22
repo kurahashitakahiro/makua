@@ -7,6 +7,8 @@ class Post < ApplicationRecord
     favorites.where(user_id: user.id).exists?
   end
 
+  attachment :post_image
+
   has_many :post_tags
 
   belongs_to :user

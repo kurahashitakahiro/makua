@@ -1,23 +1,23 @@
 <section class="container clearfix">
 
 <div class="index_content">
-  <a class="js-modal-open btn btn-dark" href="">New post</a>
-  <h2 class="index_content_text">Posts</h2>
+  <a class="js-modal-open btn btn-dark" href="">New give</a>
+  <h2 class="index_content_text">Gives</h2>
 </div>
   <div class="modal js-modal">
     <div class="modal__bg js-modal-close"></div>
       <div class="modal__content">
         <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">New post</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">New give</h5>
         <a class="js-modal-close btn btn-dark" href="">×</a>
       </div>
-        <%= form_for @post,url:users_posts_path, remote: true do |f| %>
+        <%= form_for @give,url:users_gives_path, remote: true do |f| %>
           <%= f.label :Title %><br>
           <%= f.text_field :title, class:"form-control", placeholder: "title" %><br>
           <%= f.label :本文 %><br>
           <%= f.text_area :body, class:"form-control", placeholder: "本文" %><br>
           <p>image</p>
-          <%= f.attachment_field :post_image %>
+          <%= f.attachment_field :item_images_images, multiple: true %>
           <%= f.submit "create", class:"btn btn-dark" %>
         <% end %>
       </div>
@@ -33,13 +33,11 @@
         </tr>
       </thead>
       <tbody>
-        <% @posts.each do |post| %>
+        <% @gives.each do |give| %>
         <tr>
-          <!-- <div id="post-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-          <div id="post-all"> -->
-          <td><span><%= post.user.name %></span></td>
-          <td><span><%= post.title %></span></td>
-          <td><span><%= post.body %></span></td>
+          <td><span><%= give.user.name %></span></td>
+          <td><span><%= give.title %></span></td>
+          <td><span><%= give.body %></span></td>
           </div>
         </tr>
         <% end %>

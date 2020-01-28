@@ -75,3 +75,7 @@ gem 'kaminari','~> 1.1.1'
 gem 'ransack'
 
 gem 'devise'
+
+group :production do
+  gem 'mysql2'
+end

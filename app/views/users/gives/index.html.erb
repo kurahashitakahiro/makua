@@ -1,8 +1,8 @@
 <section class="container clearfix">
 
 <div class="index_content">
-  <a class="js-modal-open btn btn-dark" href="">New give</a>
   <h2 class="index_content_text">Gives</h2>
+  <a class="js-modal-open btn btn-dark ml-3 mb-3" href="">New give</a>
 </div>
   <div class="modal js-modal">
     <div class="modal__bg js-modal-close"></div>
@@ -12,32 +12,49 @@
         <a class="js-modal-close btn btn-dark" href="">×</a>
       </div>
         <%= form_for @give,url:users_gives_path, remote: true do |f| %>
+          <%= f.label :item_name %><br>
+          <%= f.text_field :item_name, class:"form-control", placeholder: "item_name" %><br>
           <%= f.label :Title %><br>
           <%= f.text_field :title, class:"form-control", placeholder: "title" %><br>
           <%= f.label :本文 %><br>
           <%= f.text_area :body, class:"form-control", placeholder: "本文" %><br>
           <p>image</p>
-          <%= f.attachment_field :item_images_images, multiple: true %>
-          <%= f.submit "create", class:"btn btn-dark" %>
+          <%= f.attachment_field :item_images_item_images, multiple: true %><br>
+          <%= f.hidden_field :status, :value => "Yet" %>
+          <%= f.submit "create", class:"btn btn-dark mt-3" %>
         <% end %>
       </div>
     </div>
   </div>
 
     <table  class="table table-hover table-inverse">
-      <thead = style: background-color:dark;>
+      <thead = class="thead thead-dark">
         <tr>
           <th>user</th>
+          <th>image</th>
+          <th>item_name</th>
           <th>Title</th>
+          <th>status</th>
+          <th></th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <% @gives.each do |give| %>
         <tr>
-          <td><span><%= give.user.name %></span></td>
-          <td><span><%= give.title %></span></td>
-          <td><span><%= give.body %></span></td>
+          <td>
+            <%= link_to users_user_path(give.user) do %>
+              <%= attachment_image_tag give.user, :user_image, format: 'jpeg', size: '60x60', class: "pull-left profile-img rounded-circle", fallback: "no_image.jpg" %><br><span class="text-dark"><%= give.user.name %></span>
+            <% end %>
+          </td>
+          <td>
+              <%= attachment_image_tag give.item_images.first, :item_image, size: '100x100', format: 'jpeg' %>
+          </td>
+          <td><span><%= truncate(give.item_name, length: 8) %></span></td>
+          <td><span><%= truncate(give.title, length: 8) %></span></td>
+          <td><%= give.status %></td>
+          <td><span><%= give.created_at.strftime("%Y-%m-%d %H:%M") %></span></td>
+          <td><%= link_to "show", users_gife_path(give), class: "btn btn-dark" %></td>
           </div>
         </tr>
         <% end %>

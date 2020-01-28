@@ -17,3 +17,5 @@ module Makua
     # the framework and any gems in your application.
   end
 end
+
+Refile.secret_key = '99fe8b50b0b308b2607b1a30221f8e4e71de444536ee1e0e642eb6058ff4247912f1782be30e2e96af2989a26e259a5c7eb5b5c874a5c2220c85c3b02da7591f'

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root 'users/posts#index'
+  root 'users/homes#about'
   devise_for :admins, path: 'auth', path_names: { sign_in: 'panda_and_coffee_with_ryoko_play_login', sign_out: 'panda_and_coffee_with_ryoko_play_logout', password: 'panda_and_coffee_with_ryoko_play_secret', confirmation: 'panda_and_coffee_with_ryoko_play_verification', unlock: 'panda_and_coffee_with_ryoko_play_unblock', registration: 'panda_and_coffee_with_ryoko_play_register', sign_up: 'panda_and_coffee_with_ryoko_play_cmon_let_me_in' }, controllers: {
     sessions: 'admins/sessions',
     passwords: 'admins/passwords',
@@ -20,6 +20,9 @@ Rails.application.routes.draw do
     resources :gives, only: [:index, :show]
     put 'gives/:id/hide' => 'gives#hide', as: 'gives_hide'
 
+    resources :gifts, only: [:index, :show]
+    put 'gifts/:id/hide' => 'gifts#hide', as: 'gifts_hide'
+
     resources :posts, only: [:index, :show]
     put 'posts/:id/hide' => 'posts#hide', as: 'posts_hide'
 
@@ -35,15 +38,21 @@ Rails.application.routes.draw do
     resources :users, only: [:show, :edit, :update]
     put 'users/:id/hide' => 'users#hide', as: 'users_hide'
     get '/users/:id' => 'users#favorites', as: 'favorites'
-    get '/users/:id' => 'users#rooms', as: 'rooms'
 
     resources :rooms, only: [:show, :create]
     put 'rooms/:id/hide' => 'rooms#hide', as: 'rooms_hide'
 
     resources :gives, only: [:index, :show, :new, :create, :edit, :update] do
-    	resources :give_comments, only: [:create, :destroy]
+    	resources :give_comments, only: [:create]
+    end
+
+    resources :gifts, only: [:index, :show, :new, :create, :edit, :update] do
+      resources :gift_comments, only: [:create, :destroy]
     end
     put 'gives/:id/hide' => 'gives#hide', as: 'gives_hide'
+    put 'give_comments/:id/hide' => 'give_comments#hide', as: 'give_comments_hide'
+
+    put 'gifts/:id/hide' => 'gifts#hide', as: 'gifts_hide'
 
     resources :posts, only: [:index, :show, :new, :create, :edit, :update] do
       resource :favorites, only: [:create, :destroy]

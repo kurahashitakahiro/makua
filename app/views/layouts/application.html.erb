@@ -9,7 +9,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+
     <header class="headertop", style="padding: 0 50px; margin-bottom: 0px;">
     <div class="nav navbar-nav navbar-left">
       <h1><%= link_to 'makua', root_path, style: "color:white;" %></h1>
@@ -20,7 +20,7 @@
         <% elsif user_signed_in? %>
           <div class="row">
             <div style="margin-right: 10px">
-              <%= link_to 'gives', users_gives_path, style: "color:white;" %>
+              <%= link_to 'gifts', users_gifts_path, style: "color:white;" %>
             </div>
             <div style="margin-right: 10px">
               <%= link_to 'posts', users_posts_path, style: "color:white;" %>
@@ -37,7 +37,7 @@
               <%= link_to 'about', users_homes_about_path, style: "color:white;" %>
             </div>
             <div style="margin-right: 10px">
-              <%= link_to 'gives', users_gives_path, style: "color:white;" %>
+              <%= link_to 'gifts', users_gifts_path, style: "color:white;" %>
             </div>
             <div style="margin-right: 10px">
               <%= link_to 'posts', users_posts_path, style: "color:white;" %>
@@ -52,6 +52,7 @@
         <% end %>
       </div>
     </header>
+  <body>
     <main>
       <%= yield %>
     </main>

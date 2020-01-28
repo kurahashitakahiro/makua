@@ -2,12 +2,12 @@
 
 one:
   room_id: 1
-  sender_id: 1
-  body: MyText
+  user_id: 1
+  body: MyString
   is_deleted: false
 
 two:
   room_id: 1
-  sender_id: 1
-  body: MyText
+  user_id: 1
+  body: MyString
   is_deleted: false

@@ -1,8 +1,12 @@
 <section class="container clearfix">
 
 <div class="index_content">
-  <a class="js-modal-open btn btn-dark" href="">New post</a>
   <h2 class="index_content_text">Posts</h2>
+  <a class="js-modal-open btn btn-dark ml-3 mb-3" href="">New post</a>
+  <%= search_form_for @search, url:users_gifts_path do |f| %>
+    <%= f.search_field :body_cont, :placeholder => "fuzzy_search", class: "form-control-sm ml-3" %>
+    <%= f.submit "search", class: "btn btn-dark" %>
+  <% end %>
 </div>
   <div class="modal js-modal">
     <div class="modal__bg js-modal-close"></div>
@@ -17,32 +21,53 @@
           <%= f.label :本文 %><br>
           <%= f.text_area :body, class:"form-control", placeholder: "本文" %><br>
           <p>image</p>
-          <%= f.attachment_field :post_image %>
-          <%= f.submit "create", class:"btn btn-dark" %>
+          <%= f.attachment_field :post_image %><br>
+          <%= f.submit "create", class:"btn btn-dark mt-3" %>
         <% end %>
       </div>
     </div>
   </div>
 
-    <table  class="table table-hover table-inverse">
-      <thead = style: background-color:dark;>
+    <table class="table table-hover table-inverse">
+      <thead class="thead thead-dark">
         <tr>
           <th>user</th>
           <th>Title</th>
+          <th>#tag</th>
+          <th>fav</th>
+          <th></th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        <% @posts.each do |post| %>
+        <% @result.each do |post| %>
         <tr>
           <!-- <div id="post-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
           <div id="post-all"> -->
-          <td><span><%= post.user.name %></span></td>
-          <td><span><%= post.title %></span></td>
-          <td><span><%= post.body %></span></td>
-          </div>
+          <td>
+            <%= link_to users_user_path(post.user) do %>
+              <%= attachment_image_tag post.user, :user_image, format: 'jpeg', size: '60x60', class: "pull-left profile-img rounded-circle", fallback: "no_image.jpg" %><span class="text-dark"><br><%= post.user.name %></span>
+            <% end %>
+          </td>
+          <td><span><%= truncate(post.title, length: 8) %></span></td>
+          <td>
+            <span class="badge badge-secondary mr-3">
+              #tag
+            </span>
+          </td>
+          <td>
+            <% if user_signed_in? %>
+            <% unless post.user == current_user %>
+            <%= render 'users/posts/posts', post: post %>
+            <% end %>
+            <% end %>
+          </td>
+          <td><span><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></span></td>
+          <td><%= link_to "show", users_post_path(post), class: "btn btn-dark" %></td>
+          <!-- </div> -->
         </tr>
         <% end %>
       </tbody>
     </table>
+    <%= paginate @result, class: "pagination" %>
 </section>

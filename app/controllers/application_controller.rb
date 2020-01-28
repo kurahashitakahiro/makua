@@ -8,4 +8,12 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
     devise_parameter_sanitizer.permit :sign_in, keys: added_attrs
   end
+  def after_sign_in_path_for(resource)
+	case resource
+  	when User
+  	  users_user_path(resource.id)
+    when Admin
+      root_path
+    end
+	end
 end

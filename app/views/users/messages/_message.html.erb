@@ -1,0 +1,31 @@
+<div>
+<p class="<%= message.id %>" style= "margin-top: 0;">
+	<%= attachment_image_tag message.user, :user_image, format: 'jpeg', size: '60x60', class: "pull-left profile-img rounded-circle", fallback: "no_image.jpg" %>
+	<%= message.user.name %>
+</p>
+<p class="<%= message.id %>">
+	<span class="balloon1-top">
+		<h7 class="dm-body">
+			<%= message.body %><br>
+		    <%= message.created_at.strftime("%Y-%m-%d %H:%M") %>
+		</h7>
+	</span>
+</p><br>
+</div>
+<script>
+	var message = <%= message.user.id %>;
+	// console.log(message);
+	// var current_user_id = $('.dm_user').data('id');
+	var dm_user = document.getElementById('current_user');
+	// console.log(dm_user.getAttribute('data-id'));
+	// var dm_user = document.getElementsByClassName('current_user')
+	// console.log(dm_user)
+	// var current_user = dm_user.getAttribute('data-id');
+	var current_user = dm_user.getAttribute('data-id')
+	if(message == current_user){
+	  $('p.' + <%= message.id %>).css('text-align', 'right');
+	}else{
+	  $('p.' + <%= message.id %>).css('text-align', 'left');
+	}
+</script>
+

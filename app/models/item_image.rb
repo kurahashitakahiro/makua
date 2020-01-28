@@ -1,4 +1,4 @@
 class ItemImage < ApplicationRecord
-  belongs_to :give
-  attachment :image
+  belongs_to :gift
+  attachment :item_image
 end

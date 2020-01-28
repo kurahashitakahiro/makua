@@ -1,0 +1,73 @@
+<section class="container clearfix">
+  <h2>Give show</h2>
+  <p class="trim-image-to-circle">
+	<%= attachment_image_tag @give.user, :user_image, format: 'jpeg', size: '60x60', class: "pull-left profile-img rounded-circle mt-3", fallback: "no_image.jpg" %>
+  </p>
+  <%= @give.user.name %>
+  <%= @give.item_name %>
+  <%= @give.created_at.strftime("%Y-%m-%d %H:%M") %>
+  <%= @give.title %>
+  <% @give.item_images.each do |item_image| %>
+    <%= attachment_image_tag item_image, :item_image, size: '150x150', format: 'jpeg' %>
+  <% end %>
+  <%= @give.body %>
+  <% if @give.user == current_user %>
+	<div class="index_content">
+	  <a class="js-modal-open btn btn-dark mb-3" href="">Edit give</a>
+	</div>
+	  <div class="modal js-modal">
+	    <div class="modal__bg js-modal-close"></div>
+	      <div class="modal__content">
+	        <div class="modal-header">
+	        <h5 class="modal-title" id="staticBackdropLabel">Edit give</h5>
+	        <a class="js-modal-close btn btn-dark" href="">×</a>
+	      </div>
+	        <%= form_for @give,url:users_gife_path, method: :put, remote: true do |f| %>
+	          <%= f.label :item_name %><br>
+	          <%= f.text_field :item_name, class:"form-control", placeholder: "item_name" %><br>
+	          <%= f.label :Title %><br>
+	          <%= f.text_field :title, class:"form-control", placeholder: "title" %><br>
+	          <%= f.label :本文 %><br>
+	          <%= f.text_area :body, class:"form-control", placeholder: "本文" %><br>
+	          <p>image</p>
+	          <%= f.attachment_field :item_images_item_images, multiple: true %><br>
+	          <%= f.label :status, class: "mt-3" %><br>
+	          <p>
+	            <%= f.radio_button :status, :Yet %> Yet
+	            <%= f.radio_button :status, :Done, class: "ml-5" %> Done
+	          </p>
+	          <%= f.submit "update", class:"btn btn-dark" %>
+	        <% end %>
+	      </div>
+	    </div>
+	  </div>
+    <%= link_to "destroy", users_gives_hide_path, class:"btn btn-dark mb-3" %>
+  <% else %>
+  <% end %>
+
+<p>
+  <a class="btn btn-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Comments
+  </a>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+
+<div class="container pt-5">
+  <div class="row mb-3">
+    <div class="col-lg-8 offset-lg-2">
+      <%= form_for @comment,url: users_gife_give_comments_path(@give.id), method: :post, remote: true do |f| %>
+        <%= f.label :comment, t('.comment')%>
+      <% if user_signed_in? %>
+        <%= f.text_area :comment, class: "form-control mb-3", placeholder: "comment" , rows: "4" %>
+        <%= f.submit "create", class: "btn btn-dark" %>
+      <% end %>
+      <% end %>
+    </div>
+  </div>
+  <%= render 'users/give_comments/comments_area', comments: @comments %>
+</div>
+</div>
+</div>
+
+</section>

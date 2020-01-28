@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_21_093811) do
+ActiveRecord::Schema.define(version: 2020_01_25_120729) do
 
   create_table "admins", force: :cascade do |t|
     t.string "mail_address"
@@ -26,9 +26,37 @@ ActiveRecord::Schema.define(version: 2020_01_21_093811) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
+  create_table "entries", force: :cascade do |t|
+    t.integer "room_id"
+    t.integer "user_id"
+    t.boolean "is_deleted"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "favorites", force: :cascade do |t|
     t.integer "post_id"
     t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "gift_comments", force: :cascade do |t|
+    t.integer "gift_id"
+    t.integer "user_id"
+    t.text "comment"
+    t.boolean "is_deleted"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "gifts", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "item_name"
+    t.string "title"
+    t.text "body"
+    t.integer "status"
+    t.boolean "is_deleted"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -54,7 +82,7 @@ ActiveRecord::Schema.define(version: 2020_01_21_093811) do
   end
 
   create_table "item_images", force: :cascade do |t|
-    t.integer "give_id"
+    t.integer "gift_id"
     t.string "item_image_id"
     t.boolean "is_deleted"
     t.datetime "created_at", null: false
@@ -63,8 +91,8 @@ ActiveRecord::Schema.define(version: 2020_01_21_093811) do
 
   create_table "messages", force: :cascade do |t|
     t.integer "room_id"
-    t.integer "sender_id"
-    t.text "body"
+    t.integer "user_id"
+    t.string "body"
     t.boolean "is_deleted"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -96,10 +124,10 @@ ActiveRecord::Schema.define(version: 2020_01_21_093811) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "post_image_id"
+    t.integer "favorites_count"
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.integer "user_id"
     t.string "name"
     t.boolean "is_deleted"
     t.datetime "created_at", null: false

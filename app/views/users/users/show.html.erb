@@ -1,11 +1,274 @@
-<div class="container">
+<section class="container clearfix">
   <div class="row">
-    <div class="col-6 offset-5">
+    <div class="col-12 text-center">
+      <% if @user == current_user %>
 	  <h2>my page</h2>
+	  <% else %>
+	  <h2>user page</h2>
+	  <% end %>
+
 	  <p class="trim-image-to-circle">
-	    <%= attachment_image_tag @user, :user_image_id, :fill, 100, 100, format: 'jpeg', size: '120x120', class: "pull-left profile-img rounded-circle", fallback: "no_image.jpg" %>
+	    <%= attachment_image_tag @user, :user_image, format: 'jpeg', size: '120x120', class: "pull-left profile-img rounded-circle", fallback: "no_image.jpg" %>
 	  </p>
 	  <p>name: <%= @user.name %></p>
+	  <% if user_signed_in? %>
+	  	<% if @user.id != current_user.id %>
+	  		<% if @isRoom == true && @room_deleted.is_deleted == nil %>
+				 <%= link_to "DM room", users_room_path(@roomId), class:"btn btn-dark mb-3" %>
+			<% else %>
+				  	<%= form_for @room, url: users_rooms_path, method: :post do |f| %>
+			    		<%= f.hidden_field :name, :value => "ダイレクトメッセージ" %>
+			    		<!--%= f.fields_for @entry do |e| %-->
+			     		 <%= f.hidden_field :user_id, :value => @user.id %>
+			    		<!--% end %-->
+			    		<%= f.submit "start DM", class:"btn btn-dark mb-3" %>
+	  				<% end %>
+			<% end %>
+		<% end %>
+	  <% end %>
+	  <% if @user == current_user %>
+		  <a class="js-modal-open btn btn-dark mr-3 mb-3" href="">Edit user</a>
+		  <%= link_to "Withdraw", users_users_hide_path, method: :put, "data-confirm" =>"Are you sure you want to permanently delete this file?" , class:"btn btn-dark mb-3" %>
+
+		  <div class="modal js-modal">
+		    <div class="modal__bg js-modal-close"></div>
+		      <div class="modal__content">
+		        <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel">Edit user</h5>
+		        <a class="js-modal-close btn btn-dark" href="">×</a>
+		      </div>
+		        <div class="row">
+                  <div class="col-12 text-left">
+		            <%= form_for @user,url:users_user_path, method: :put, remote: true do |f| %>
+		              <%= f.label :name %><br>
+		              <%= f.text_field :name, class:"form-control", placeholder: "name" %><br>
+		              <p>image</p>
+		              <%= f.attachment_field :user_image %><br>
+		              <%= f.submit "update", class:"btn btn-dark mt-3" %>
+		            <% end %>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+	  <% else %>
+	  <% end %>
 	</div>
   </div>
-</div>
+  <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="card">
+    <div class="card-header" role="tab" id="headingOne">
+      <h5 class="mb-0">
+        <a class="text-body d-block p-3 m-n3" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">
+          <% if @user == current_user %>
+            <span class="text-body-color">my Gifts</span>
+          <% else %>
+            <span class="text-body-color">user's Gifts</span>
+          <% end %>
+        </a>
+      </h5>
+    </div><!-- /.card-header -->
+    <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        <h2 class="index_content_text">Gifts</h2>
+	<table  class="table table-hover table-inverse">
+      <thead = class="thead thead-dark">
+        <tr>
+          <th>user</th>
+          <th>image</th>
+          <th>item_name</th>
+          <th>Title</th>
+          <th>status</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @gifts.each do |gift| %>
+        <tr>
+          <td><%= attachment_image_tag gift.user, :user_image, format: 'jpeg', size: '60x60', class: "pull-left profile-img rounded-circle", fallback: "no_image.jpg" %><br><span><%= gift.user.name %></span></td>
+          <td>
+              <%= attachment_image_tag gift.item_images.first, :item_image, size: '100x100', format: 'jpeg' %>
+
+          </td>
+          <td><span><%= truncate(gift.item_name, length: 8) %></span></td>
+          <td><span><%= truncate(gift.title, length: 8) %></span></td>
+          <td><%= gift.status %></td>
+          <td><span><%= gift.created_at.strftime("%Y-%m-%d %H:%M") %></span></td>
+          <td><%= link_to "show", users_gift_path(gift), class: "btn btn-dark" %></td>
+          </div>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @gifts, class: "pagination" %>
+      </div><!-- /.card-body -->
+    </div><!-- /.collapse -->
+  </div><!-- /.card -->
+  <div class="card">
+    <div class="card-header" role="tab" id="headingTwo">
+      <h5 class="mb-0 ">
+        <a class="collapsed text-body d-block p-3 m-n3" data-toggle="collapse" href="#collapseTwo" role="button" aria-expanded="false" aria-controls="collapseTwo">
+          <% if @user == current_user %>
+            <span class="text-body-color">my Posts</span>
+          <% else %>
+            <span class="text-body-color">user's Posts</span>
+          <% end %>
+        </a>
+      </h5>
+    </div><!-- /.card-header -->
+    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        <h2 class="index_content_text">Posts</h2>
+    <table class="table table-hover table-inverse">
+      <thead class="thead thead-dark">
+        <tr>
+          <th>user</th>
+          <th>Title</th>
+          <th>#tag</th>
+          <th>fav</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @posts.each do |post| %>
+        <tr>
+          <!-- <div id="post-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+          <div id="post-all"> -->
+          <td><%= attachment_image_tag post.user, :user_image, format: 'jpeg', size: '60x60', class: "pull-left profile-img rounded-circle", fallback: "no_image.jpg" %><span><br><%= post.user.name %></span></td>
+          <td><span><%= post.title %></span></td>
+          <td></td>
+          <td>
+            <% if user_signed_in? %>
+            <% unless post.user == current_user %>
+            <%= render 'users/posts/posts', post: post %>
+            <% end %>
+            <% end %>
+          </td>
+          <td><span><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></span></td>
+          <td><%= link_to "show", users_post_path(post), class: "btn btn-dark" %></td>
+          <!-- </div> -->
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @posts, class: "pagination" %>
+      </div><!-- /.card-body -->
+    </div><!-- /.collapse -->
+  </div><!-- /.card -->
+  <% if @user == current_user %>
+  <div class="card">
+    <div class="card-header" role="tab" id="headingThree">
+      <h5 class="mb-0">
+        <a class="collapsed text-body d-block p-3 m-n3" data-toggle="collapse" href="#collapseThree" role="button" aria-expanded="false" aria-controls="collapseThree">
+          <span class="text-body-color">favorite Posts</span>
+        </a>
+      </h5>
+    </div><!-- /.card-header -->
+    <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+        <h2 class="index_content_text">favorite Posts</h2>
+    <table class="table table-hover table-inverse">
+      <thead class="thead thead-dark">
+        <tr>
+          <th>user</th>
+          <th>Title</th>
+          <th>#tag</th>
+          <th>fav</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @favorites.each do |favorite| %>
+	        <% if favorite.post.is_deleted == nil && favorite.post.user.is_deleted == nil %>
+		        <tr>
+		          <!-- <div id="post-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+		          <div id="post-all"> -->
+		          <td>
+		          	<%= link_to users_user_path(favorite.post.user) do %>
+		          	<%= attachment_image_tag favorite.post.user, :user_image, format: 'jpeg', size: '60x60', class: "pull-left profile-img rounded-circle", fallback: "no_image.jpg" %><span class="text-dark"><br><%= favorite.post.user.name %></span>
+		          	<% end %>
+		          </td>
+		          <td><span><%= favorite.post.title %></span></td>
+		          <td></td>
+		          <td>
+		            <% if user_signed_in? %>
+		            <% unless favorite.post.user == current_user %>
+		            <%= render 'users/posts/posts', post: favorite.post %>
+		            <% end %>
+		            <% end %>
+		          </td>
+		          <td><span><%= favorite.post.created_at.strftime("%Y-%m-%d %H:%M") %></span></td>
+		          <td><%= link_to "show", users_post_path(favorite.post), class: "btn btn-dark" %></td>
+		          <!-- </div> -->
+		        </tr>
+		    <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @favorites, class: "pagination" %>
+      </div><!-- /.card-body -->
+    </div><!-- /.collapse -->
+  </div><!-- /.card -->
+<!-- </div>/#accordion -->
+<% else %>
+  <div class="user-page mb-3"></div>
+<% end %>
+<% if @user == current_user %>
+  <div class="card mb-3">
+    <div class="card-header" role="tab" id="headingFour">
+      <h5 class="mb-0">
+        <a class="collapsed text-body d-block p-3 m-n3" data-toggle="collapse" href="#collapseFour" role="button" aria-expanded="false" aria-controls="collapseFour">
+          <span class="text-body-color">all DM</span>
+        </a>
+      </h5>
+    </div><!-- /.card-header -->
+    <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordion">
+      <div class="card-body">
+        <h2 class="index_content_text">all DM</h2>
+    <table class="table table-hover table-inverse">
+      <thead class="thead thead-dark">
+        <tr>
+          <th>user</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @anotherEntries.each do |entry| %>
+        <% if entry.room.is_deleted == nil && entry.user.is_deleted == nil %>
+			<tr>
+				<td>
+  					<%= link_to users_room_path(entry.room_id) do %>
+    					<%= attachment_image_tag entry.user, :user_image, format: 'jpeg', size: '60x60', class: "pull-left profile-img rounded-circle", fallback: "no_image.jpg" %><span class="text-dark"><br><%= entry.user.name %>'s room
+  					<% end %>
+  				</td>
+  				<td>
+  					<% message = Message.find_by(id: entry.room.message_ids.last) %>
+  					<% if message %>
+  						<%= truncate(message.body,length: 10) %>
+					<% else %>
+						No messages.
+					<% end %>
+  				</td>
+                <td>
+  					<%= entry.updated_at.strftime("%Y-%m-%d %H:%M") %>
+  				</td>
+                <td>
+                    <%= link_to "destroy", users_rooms_hide_path(entry.room_id), method: :put, "data-confirm" =>"Are you sure you want to permanently delete this file?" ,class:"btn btn-dark mb-3" %>
+                </td>
+  			</tr>
+  		<% end %>
+        <% end %>
+      </tbody>
+    </table>
+      </div><!-- /.card-body -->
+    </div><!-- /.collapse -->
+  </div><!-- /.card -->
+</div><!-- /#accordion -->
+<% else %>
+  <div class="user-page mb-3"></div>
+<% end %>

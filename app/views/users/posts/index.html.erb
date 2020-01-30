@@ -3,9 +3,9 @@
 <div class="index_content">
   <h2 class="index_content_text">Posts</h2>
   <a class="js-modal-open btn btn-dark ml-3 mb-3" href="">New post</a>
-  <%= search_form_for @search, url:users_gifts_path do |f| %>
+  <%= search_form_for @search, url:users_posts_path do |f| %>
     <%= f.search_field :body_cont, :placeholder => "fuzzy_search", class: "form-control-sm ml-3" %>
-    <%= f.submit "search", class: "btn btn-dark" %>
+    <%= f.submit "Search", class: "btn btn-dark" %>
   <% end %>
 </div>
   <div class="modal js-modal">
@@ -22,7 +22,7 @@
           <%= f.text_area :body, class:"form-control", placeholder: "本文" %><br>
           <p>image</p>
           <%= f.attachment_field :post_image %><br>
-          <%= f.submit "create", class:"btn btn-dark mt-3" %>
+          <%= f.submit "Create", class:"btn btn-dark mt-3" %>
         <% end %>
       </div>
     </div>
@@ -63,7 +63,7 @@
             <% end %>
           </td>
           <td><span><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></span></td>
-          <td><%= link_to "show", users_post_path(post), class: "btn btn-dark" %></td>
+          <td><%= link_to "Show", users_post_path(post), class: "btn btn-dark" %></td>
           <!-- </div> -->
         </tr>
         <% end %>

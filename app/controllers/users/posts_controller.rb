@@ -52,15 +52,6 @@ class Users::PostsController < ApplicationController
     redirect_to users_posts_path
   end
 
-  def hoge
-    @q = Post.ransack
-    @q.build_condition if @q.conditions.empty?
-  end
-
-  def fuga
-    @result = @q.result(distinct: true)
-  end
-
   private
   def post_params
   	params.require(:post).permit(:user_id, :title, :body, :post_image, :is_deleted)

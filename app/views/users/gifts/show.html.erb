@@ -51,12 +51,12 @@
 	            <%= f.radio_button :status, :Yet %> Yet
 	            <%= f.radio_button :status, :Done, class: "ml-5" %> Done
 	          </p>
-	          <%= f.submit "update", class:"btn btn-dark" %>
+	          <%= f.submit "Update", class:"btn btn-dark" %>
 	        <% end %>
 	      </div>
 	    </div>
 	  </div>
-    <%= link_to "destroy", users_gifts_hide_path, method: :put, "data-confirm" =>"Are you sure you want to permanently delete this file?" , class:"btn btn-dark mb-3" %>
+    <%= link_to "Destroy", users_gifts_hide_path, method: :put, "data-confirm" =>"Are you sure you want to permanently delete this file?" , class:"btn btn-dark mb-3" %>
   <% else %>
   <% end %>
 
@@ -75,7 +75,7 @@
         <%= f.label :comment, t('.comment')%>
       <% if user_signed_in? %>
         <%= f.text_area :comment, class: "form-control mb-3", placeholder: "comment" , rows: "4" %>
-        <%= f.submit "create", class: "btn btn-dark" %>
+        <%= f.submit "Create", class: "btn btn-dark" %>
       <% end %>
       <% end %>
     </div>

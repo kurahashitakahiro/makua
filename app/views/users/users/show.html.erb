@@ -2,9 +2,9 @@
   <div class="row">
     <div class="col-12 text-center">
       <% if @user == current_user %>
-	  <h2>my page</h2>
+	  <h2>My page</h2>
 	  <% else %>
-	  <h2>user page</h2>
+	  <h2>User page</h2>
 	  <% end %>
 
 	  <p class="trim-image-to-circle">
@@ -21,7 +21,7 @@
 			    		<!--%= f.fields_for @entry do |e| %-->
 			     		 <%= f.hidden_field :user_id, :value => @user.id %>
 			    		<!--% end %-->
-			    		<%= f.submit "start DM", class:"btn btn-dark mb-3" %>
+			    		<%= f.submit "Start DM", class:"btn btn-dark mb-3" %>
 	  				<% end %>
 			<% end %>
 		<% end %>
@@ -61,9 +61,9 @@
       <h5 class="mb-0">
         <a class="text-body d-block p-3 m-n3" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">
           <% if @user == current_user %>
-            <span class="text-body-color">my Gifts</span>
+            <span class="text-body-color">My Gifts</span>
           <% else %>
-            <span class="text-body-color">user's Gifts</span>
+            <span class="text-body-color">User's Gifts</span>
           <% end %>
         </a>
       </h5>
@@ -95,7 +95,7 @@
           <td><span><%= truncate(gift.title, length: 8) %></span></td>
           <td><%= gift.status %></td>
           <td><span><%= gift.created_at.strftime("%Y-%m-%d %H:%M") %></span></td>
-          <td><%= link_to "show", users_gift_path(gift), class: "btn btn-dark" %></td>
+          <td><%= link_to "Show", users_gift_path(gift), class: "btn btn-dark" %></td>
           </div>
         </tr>
         <% end %>
@@ -110,9 +110,9 @@
       <h5 class="mb-0 ">
         <a class="collapsed text-body d-block p-3 m-n3" data-toggle="collapse" href="#collapseTwo" role="button" aria-expanded="false" aria-controls="collapseTwo">
           <% if @user == current_user %>
-            <span class="text-body-color">my Posts</span>
+            <span class="text-body-color">My Posts</span>
           <% else %>
-            <span class="text-body-color">user's Posts</span>
+            <span class="text-body-color">User's Posts</span>
           <% end %>
         </a>
       </h5>
@@ -147,7 +147,7 @@
             <% end %>
           </td>
           <td><span><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></span></td>
-          <td><%= link_to "show", users_post_path(post), class: "btn btn-dark" %></td>
+          <td><%= link_to "Show", users_post_path(post), class: "btn btn-dark" %></td>
           <!-- </div> -->
         </tr>
         <% end %>
@@ -162,13 +162,13 @@
     <div class="card-header" role="tab" id="headingThree">
       <h5 class="mb-0">
         <a class="collapsed text-body d-block p-3 m-n3" data-toggle="collapse" href="#collapseThree" role="button" aria-expanded="false" aria-controls="collapseThree">
-          <span class="text-body-color">favorite Posts</span>
+          <span class="text-body-color">Favorite Posts</span>
         </a>
       </h5>
     </div><!-- /.card-header -->
     <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
       <div class="card-body">
-        <h2 class="index_content_text">favorite Posts</h2>
+        <h2 class="index_content_text">Favorite Posts</h2>
     <table class="table table-hover table-inverse">
       <thead class="thead thead-dark">
         <tr>
@@ -201,7 +201,7 @@
 		            <% end %>
 		          </td>
 		          <td><span><%= favorite.post.created_at.strftime("%Y-%m-%d %H:%M") %></span></td>
-		          <td><%= link_to "show", users_post_path(favorite.post), class: "btn btn-dark" %></td>
+		          <td><%= link_to "Show", users_post_path(favorite.post), class: "btn btn-dark" %></td>
 		          <!-- </div> -->
 		        </tr>
 		    <% end %>
@@ -221,13 +221,13 @@
     <div class="card-header" role="tab" id="headingFour">
       <h5 class="mb-0">
         <a class="collapsed text-body d-block p-3 m-n3" data-toggle="collapse" href="#collapseFour" role="button" aria-expanded="false" aria-controls="collapseFour">
-          <span class="text-body-color">all DM</span>
+          <span class="text-body-color">All DM</span>
         </a>
       </h5>
     </div><!-- /.card-header -->
     <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordion">
       <div class="card-body">
-        <h2 class="index_content_text">all DM</h2>
+        <h2 class="index_content_text">All DM</h2>
     <table class="table table-hover table-inverse">
       <thead class="thead thead-dark">
         <tr>
@@ -258,7 +258,7 @@
   					<%= entry.updated_at.strftime("%Y-%m-%d %H:%M") %>
   				</td>
                 <td>
-                    <%= link_to "destroy", users_rooms_hide_path(entry.room_id), method: :put, "data-confirm" =>"Are you sure you want to permanently delete this file?" ,class:"btn btn-dark mb-3" %>
+                    <%= link_to "Destroy", users_rooms_hide_path(entry.room_id), method: :put, "data-confirm" =>"Are you sure you want to permanently delete this file?" ,class:"btn btn-dark mb-3" %>
                 </td>
   			</tr>
   		<% end %>

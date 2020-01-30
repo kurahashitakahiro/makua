@@ -18,7 +18,7 @@
         <%= form_for @gift,url:users_gifts_path, remote: true do |f| %>
           <%= f.label :item_name %><br>
           <%= f.text_field :item_name, class:"form-control", placeholder: "item_name" %><br>
-          <%= f.label :Title %><br>
+          <%= f.label :title %><br>
           <%= f.text_field :title, class:"form-control", placeholder: "title" %><br>
           <%= f.label :本文 %><br>
           <%= f.text_area :body, class:"form-control", placeholder: "本文" %><br>

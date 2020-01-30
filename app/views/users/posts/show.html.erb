@@ -46,12 +46,12 @@
 	          <%= f.text_area :body, class:"form-control", placeholder: "本文" %><br>
 	          <p>image</p>
 	          <%= f.attachment_field :post_image %>
-	          <%= f.submit "update", class:"btn btn-dark" %>
+	          <%= f.submit "Update", class:"btn btn-dark" %>
 	        <% end %>
 	      </div>
 	    </div>
 	  </div>
-    <%= link_to "destroy", users_posts_hide_path(@post.id), method: :put, "data-confirm" =>"Are you sure you want to permanently delete this file?" , class:"btn btn-dark mb-3" %>
+    <%= link_to "Destroy", users_posts_hide_path(@post.id), method: :put, "data-confirm" =>"Are you sure you want to permanently delete this file?" , class:"btn btn-dark mb-3" %>
   <% else %>
   <% end %>
 
@@ -70,7 +70,7 @@
         <%= f.label :comment, t('.comment')%>
       <% if user_signed_in? %>
         <%= f.text_area :comment, class: "form-control mb-3", placeholder: "comment" , rows: "4" %>
-        <%= f.submit "create", class: "btn btn-dark" %>
+        <%= f.submit "Create", class: "btn btn-dark" %>
       <% end %>
       <% end %>
     </div>

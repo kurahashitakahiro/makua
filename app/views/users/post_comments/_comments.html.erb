@@ -26,7 +26,7 @@
           <td>
           	<% if user_signed_in? %>
             <% if comment.user == current_user %>
-  	        <%= link_to "destroy", users_post_post_comment_path(post_id: post.id, id: comment.id), method: :delete, remote: true, "data-confirm" =>"Are you sure you want to permanently delete this file?" ,class: "btn btn-dark" %>
+  	        <%= link_to "Destroy", users_post_post_comment_path(post_id: post.id, id: comment.id), method: :delete, remote: true, "data-confirm" =>"Are you sure you want to permanently delete this file?" ,class: "btn btn-dark" %>
   	        <% end %>
   	        <% end %>
   	      </td>
